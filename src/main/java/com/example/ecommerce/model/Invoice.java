@@ -35,5 +35,4 @@ public class Invoice {
     private String receiverName;
     private String receiverNumber;
     private String odererName;
-
 }
