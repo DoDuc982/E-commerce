@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ImportedGood")
+@RequestMapping("/imported_good")
 public class ImportedGoodController {
     private final ImportedGoodService ImportedGoodService;
 
