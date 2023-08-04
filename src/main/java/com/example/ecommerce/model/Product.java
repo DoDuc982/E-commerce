@@ -1,6 +1,6 @@
 package com.example.ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +22,7 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
+    private Double discountPrice;
     private String imageUrl;
     @CreationTimestamp
     private LocalDateTime createdOn;
@@ -29,7 +30,8 @@ public class Product {
     private LocalDateTime updatedOn;
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Category category;
     @ManyToOne
     @JoinColumn(name = "discount_id")
