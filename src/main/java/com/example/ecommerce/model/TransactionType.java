@@ -1,7 +1,6 @@
 package com.example.ecommerce.model;
 
-public enum PaymentMethod {
+public enum TransactionType {
     OFFLINE,
     ONLINE,
-    BOTH
 }
