@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.jdbc.datasource.AbstractDriverBasedDataSource;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,18 +31,16 @@ public class Order {
     private String lastname;
     private String mobile;
     private String email;
-    private String address1;
-    private String address2;
+    private String address;
+    private String district;
     private String city;
     private String province;
-    private String country;
     private String content;
 
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

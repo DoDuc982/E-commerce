@@ -19,8 +19,12 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private Double price;
-    private Integer quantity;
+    private Double discountPrice;
+    private String imageUrl;
+    private Long quantity;
+    private Double totalPrice;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
