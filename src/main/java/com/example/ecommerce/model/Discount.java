@@ -22,5 +22,8 @@ public class Discount {
     private String code;
     private String content;
     private Double price;
+    private Double percentage;
+    private DiscountFor discountFor;
+    private DiscountType discountType;
     private Long quantity;
 }
