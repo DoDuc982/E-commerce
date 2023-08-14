@@ -22,6 +22,7 @@ public class User {
     private Long id;
     private String name;
     private String phoneNumber;
+    private String password;
     private boolean sex;
     @CreationTimestamp
     private LocalDateTime createdOn;
