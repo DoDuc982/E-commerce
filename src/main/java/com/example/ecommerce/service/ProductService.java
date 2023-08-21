@@ -1,11 +1,15 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.DTO.ProductDTO;
+import com.example.ecommerce.mapper.MapToDto;
+import com.example.ecommerce.mapper.MapToEntity;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -17,26 +21,30 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll().stream().map(MapToDto::mapToProductDTO).collect(Collectors.toList());
     }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+    public ProductDTO getProductById(Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        return MapToDto.mapToProductDTO(product);
     }
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public ProductDTO createProduct(ProductDTO productDTO) {
+        Product product = MapToEntity.mapToProduct(productDTO);
+        productRepository.save(product);
+        return productDTO;
     }
 
-    public Product updateProduct(Long id, Product updatedProduct) {
+    public ProductDTO updateProduct(Long id, ProductDTO updatedProduct) {
         Product product = productRepository.findById(id).orElse(null);
         if (product != null) {
             product.setName(updatedProduct.getName());
             product.setPrice(updatedProduct.getPrice());
             product.setImageUrl(updatedProduct.getImageUrl());
             product.setCategory(updatedProduct.getCategory());
-            return productRepository.save(product);
+            productRepository.save(product);
+            return MapToDto.mapToProductDTO(product);
         }
         return null;
     }

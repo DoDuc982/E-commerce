@@ -25,6 +25,7 @@ public class Product {
     private Double discountPrice;
     private String imageUrl;
     private Long quantity;
+    private Long soldQuantity;
     private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;

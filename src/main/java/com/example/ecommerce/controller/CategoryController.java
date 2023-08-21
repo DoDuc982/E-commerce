@@ -1,5 +1,6 @@
 package com.example.ecommerce.controller;
 
+import com.example.ecommerce.DTO.CategoryDTO;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        Category category = categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
+        CategoryDTO category = categoryService.getCategoryById(id);
         if (category != null) {
             return ResponseEntity.ok(category);
         } else {
@@ -35,8 +36,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category createdCategory = categoryService.createCategory(category);
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO category) {
+        CategoryDTO createdCategory = categoryService.createCategory(category);
         if (createdCategory != null) {
             return ResponseEntity.ok(createdCategory);
         } else {
@@ -45,8 +46,8 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
-        Category category = categoryService.updateCategory(id, updatedCategory);
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO updatedCategory) {
+        CategoryDTO category = categoryService.updateCategory(id, updatedCategory);
         if (category != null) {
             return ResponseEntity.ok(category);
         } else {

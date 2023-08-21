@@ -1,5 +1,8 @@
 package com.example.ecommerce.controller;
 
+import com.example.ecommerce.DTO.CategoryDTO;
+import com.example.ecommerce.DTO.ProductDTO;
+import com.example.ecommerce.mapper.MapToEntity;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.service.CategoryService;
@@ -12,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/admin/api/products")
 public class ProductController {
 
     private final ProductService productService;
-
     private final CategoryService categoryService;
+
     @Autowired
     public ProductController(ProductService productService, CategoryService categoryService) {
         this.productService = productService;
@@ -25,23 +28,23 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        if (product != null) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
+        ProductDTO productDTO = productService.getProductById(id);
+        if (productDTO != null) {
+            return new ResponseEntity<>(productDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.createProduct(product);
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+        ProductDTO createdProduct = productService.createProduct(productDTO);
         if (createdProduct != null) {
             return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
         } else {
@@ -50,8 +53,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-        Product productToUpdate = productService.getProductById(id);
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO updatedProduct) {
+        ProductDTO productToUpdate = productService.getProductById(id);
 
         if (productToUpdate == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,13 +63,11 @@ public class ProductController {
         productToUpdate.setPrice(updatedProduct.getPrice());
         productToUpdate.setImageUrl(updatedProduct.getImageUrl());
 
-        Category category = categoryService.getCategoryById(updatedProduct.getCategory().getId());
-        productToUpdate.setCategory(category);
+        CategoryDTO category = categoryService.getCategoryById(updatedProduct.getCategory().getId());
 
         updatedProduct = productService.updateProduct(id, productToUpdate);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {

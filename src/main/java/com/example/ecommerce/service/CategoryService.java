@@ -1,11 +1,16 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.DTO.CategoryDTO;
+import com.example.ecommerce.mapper.MapToDto;
+import com.example.ecommerce.mapper.MapToEntity;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -16,23 +21,25 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepository.findAll().stream().map(MapToDto::mapToCategoryDTO).collect(Collectors.toList());
     }
 
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElse(null);
+    public CategoryDTO getCategoryById(Long id) {
+        return MapToDto.mapToCategoryDTO(Objects.requireNonNull(categoryRepository.findById(id).orElse(null)));
     }
 
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+    public CategoryDTO createCategory(CategoryDTO category) {
+        categoryRepository.save(MapToEntity.mapToCategory(category));
+        return category;
     }
 
-    public Category updateCategory(Long id, Category updatedCategory) {
-        Category category = categoryRepository.findById(id).orElse(null);
+    public CategoryDTO updateCategory(Long id, CategoryDTO updatedCategory) {
+        CategoryDTO category = MapToDto.mapToCategoryDTO(Objects.requireNonNull(categoryRepository.findById(id).orElse(null)));
         if (category != null) {
             category.setName(updatedCategory.getName());
-            return categoryRepository.save(category);
+            categoryRepository.save(MapToEntity.mapToCategory(category));
+            return category;
         }
         return null;
     }
