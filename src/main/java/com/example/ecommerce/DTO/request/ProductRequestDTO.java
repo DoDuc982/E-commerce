@@ -1,17 +1,10 @@
-package com.example.ecommerce.DTO;
+package com.example.ecommerce.DTO.request;
 
 import com.example.ecommerce.model.Category;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ProductDTO {
-    private Long id;
+public class ProductRequestDTO {
     private String name;
     private Double price;
     private Double discountPrice;
@@ -19,5 +12,5 @@ public class ProductDTO {
     private Long quantity;
     private Long soldQuantity;
     private String content;
-    private Category category;
+    private Long categoryId;
 }

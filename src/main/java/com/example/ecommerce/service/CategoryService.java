@@ -1,16 +1,15 @@
 package com.example.ecommerce.service;
 
-import com.example.ecommerce.DTO.CategoryDTO;
-import com.example.ecommerce.mapper.MapToDto;
-import com.example.ecommerce.mapper.MapToEntity;
+import com.example.ecommerce.DTO.mapper.Mapper;
+import com.example.ecommerce.DTO.request.CategoryRequestDTO;
+import com.example.ecommerce.DTO.response.CategoryResponseDTO;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -20,31 +19,37 @@ public class CategoryService {
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
-
-    public List<CategoryDTO> getAllCategories() {
-        return categoryRepository.findAll().stream().map(MapToDto::mapToCategoryDTO).collect(Collectors.toList());
+    public Category getIdCategory(Long categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(() ->
+                new IllegalArgumentException("could not find category with id: " + categoryId));
     }
-
-    public CategoryDTO getCategoryById(Long id) {
-        return MapToDto.mapToCategoryDTO(Objects.requireNonNull(categoryRepository.findById(id).orElse(null)));
+    public CategoryResponseDTO createCategory (CategoryRequestDTO categoryRequestDTO){
+        Category category = new Category();
+        category.setName(categoryRequestDTO.getName());
+        category.setContent(categoryRequestDTO.getContent());
+        categoryRepository.save(category);
+        return Mapper.categoryTocategoryResponseDTO(category);
     }
-
-    public CategoryDTO createCategory(CategoryDTO category) {
-        categoryRepository.save(MapToEntity.mapToCategory(category));
-        return category;
+    public CategoryResponseDTO getCategoryById (Long id){
+        Category categoryOptional = this.getIdCategory(id);
+        return Mapper.categoryTocategoryResponseDTO(categoryOptional);
     }
-
-    public CategoryDTO updateCategory(Long id, CategoryDTO updatedCategory) {
-        CategoryDTO category = MapToDto.mapToCategoryDTO(Objects.requireNonNull(categoryRepository.findById(id).orElse(null)));
-        if (category != null) {
-            category.setName(updatedCategory.getName());
-            categoryRepository.save(MapToEntity.mapToCategory(category));
-            return category;
+    public List<CategoryResponseDTO> getAllCategories(){
+        List<Category> categories = categoryRepository.findAll().stream().toList();
+        List<CategoryResponseDTO> categoryResponseDTOS = new ArrayList<>();
+        for (Category category : categories){
+            categoryResponseDTOS.add(Mapper.categoryTocategoryResponseDTO(category));
         }
-        return null;
+        return categoryResponseDTOS;
+    }
+    public CategoryResponseDTO updateCategory (Long id, CategoryRequestDTO categoryRequestDTO){
+        Category category = this.getIdCategory(id);
+        category.setName(categoryRequestDTO.getName());
+        category.setContent(categoryRequestDTO.getContent());
+        return Mapper.categoryTocategoryResponseDTO(category);
+    }
+    public void deleteCategory (Long id){
+        categoryRepository.deleteById(this.getIdCategory(id).getId());
     }
 
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
-    }
 }

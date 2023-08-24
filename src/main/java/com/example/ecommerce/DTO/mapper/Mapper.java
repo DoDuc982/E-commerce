@@ -1,27 +1,28 @@
-package com.example.ecommerce.mapper;
+package com.example.ecommerce.DTO.mapper;
 
-import com.example.ecommerce.DTO.CategoryDTO;
-import com.example.ecommerce.DTO.ProductDTO;
+import com.example.ecommerce.DTO.response.CategoryResponseDTO;
+import com.example.ecommerce.DTO.response.ProductResponseDTO;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MapToDto {
-    public static ProductDTO mapToProductDTO(Product product){
-        return ProductDTO.builder()
+public class Mapper {
+    public static ProductResponseDTO productToProductResponseDTO(Product product) {
+        return ProductResponseDTO.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .price(product.getPrice())
+                .content(product.getContent())
                 .quantity(product.getQuantity())
                 .imageUrl(product.getImageUrl())
                 .soldQuantity(product.getSoldQuantity())
-                .content(product.getContent())
-                .category(product.getCategory())
+                .category(product.getCategory().getName())
                 .build();
     }
-    public static CategoryDTO mapToCategoryDTO(Category category){
-        return CategoryDTO.builder()
+    public static CategoryResponseDTO categoryTocategoryResponseDTO(Category category){
+        return CategoryResponseDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .content(category.getContent())

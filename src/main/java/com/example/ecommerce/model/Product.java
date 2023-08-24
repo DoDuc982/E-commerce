@@ -1,6 +1,5 @@
 package com.example.ecommerce.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +32,5 @@ public class Product {
     private LocalDateTime updatedOn;
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonIgnore
     private Category category;
 }
