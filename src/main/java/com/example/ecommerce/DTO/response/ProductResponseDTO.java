@@ -1,6 +1,5 @@
 package com.example.ecommerce.DTO.response;
 
-import com.example.ecommerce.model.Category;
 import lombok.Builder;
 import lombok.Data;
 

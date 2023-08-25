@@ -1,10 +1,14 @@
 package com.example.ecommerce.service;
 
+import com.example.ecommerce.DTO.mapper.Mapper;
+import com.example.ecommerce.DTO.request.UserRequestDTO;
+import com.example.ecommerce.DTO.response.UserResponseDTO;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,32 +21,41 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
+        for (User user : users){
+            userResponseDTOS.add(Mapper.userToUserResponseDTO(user));
+        }
+        return userResponseDTOS;
     }
 
-    public User getUserById(Long id) {
+    public User getUserId(Long id) {
         return userRepository.findById(id)
                 .orElse(null);
     }
-
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserResponseDTO getUserById(Long id){
+        return Mapper.userToUserResponseDTO(this.getUserId(id));
     }
 
-    public User updateUser(Long id, User updatedUser) {
-        User user = getUserById(id);
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+        User user = new User();
+        user.setName(userRequestDTO.getName());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setRole(userRequestDTO.getRole());
+        user.setSex(userRequestDTO.isSex());
+        user.setPhoneNumber(userRequestDTO.getPhoneNumber());
+        userRepository.save(user);
+        return Mapper.userToUserResponseDTO(user);
+    }
+    public UserResponseDTO updateUser(Long id, UserRequestDTO updatedUser) {
+        User user = getUserId(id);
         user.setName(updatedUser.getName());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
         user.setSex(updatedUser.isSex());
         user.setRole(updatedUser.getRole());
         //Còn phần order và invoice
-        return userRepository.save(user);
+        userRepository.save(user);
+        return Mapper.userToUserResponseDTO(user);
     }
-
-    public void deleteUser(Long id) {
-        User employee = getUserById(id);
-        userRepository.delete(employee);
-    }
-
 }

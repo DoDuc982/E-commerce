@@ -2,8 +2,11 @@ package com.example.ecommerce.DTO.mapper;
 
 import com.example.ecommerce.DTO.response.CategoryResponseDTO;
 import com.example.ecommerce.DTO.response.ProductResponseDTO;
+import com.example.ecommerce.DTO.response.UserResponseDTO;
+import com.example.ecommerce.model.Address;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
+import com.example.ecommerce.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +34,21 @@ public class Mapper {
                 .name(category.getName())
                 .content(category.getContent())
                 .productsName(names)
+                .build();
+    }
+    public static UserResponseDTO userToUserResponseDTO(User user){
+        List<String> addresses = new ArrayList<>();
+        for (Address address : user.getAddresses()){
+            addresses.add(address.getAddress() + ", " + address.getDistrict() + ", " + address.getCity() + ", " + address.getProvince());
+        }
+        return UserResponseDTO.builder()
+                .sex(user.isSex())
+                .phoneNumber(user.getPhoneNumber())
+                .role(user.getRole())
+                .password(user.getPassword())
+                .createdOn(user.getCreatedOn())
+                .name(user.getName())
+                .addresses(addresses)
                 .build();
     }
 }
