@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller;
+package com.example.ecommerce.controller.admin;
 
 import com.example.ecommerce.DTO.request.CategoryRequestDTO;
 import com.example.ecommerce.DTO.response.CategoryResponseDTO;

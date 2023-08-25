@@ -22,11 +22,15 @@ public class Mapper {
                 .build();
     }
     public static CategoryResponseDTO categoryTocategoryResponseDTO(Category category){
+        List<String> names = new ArrayList<>();
+        for (Product product : category.getProducts()) {
+            names.add(product.getName());
+        }
         return CategoryResponseDTO.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .content(category.getContent())
-                .products(category.getProducts())
+                .productsName(names)
                 .build();
     }
 }

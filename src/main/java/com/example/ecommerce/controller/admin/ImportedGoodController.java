@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller;
+package com.example.ecommerce.controller.admin;
 
 import com.example.ecommerce.model.ImportedGood;
 import com.example.ecommerce.service.ImportedGoodService;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/imported_good")
+@RequestMapping("/admin/api/imported_good")
 public class ImportedGoodController {
     private final ImportedGoodService ImportedGoodService;
 
@@ -44,7 +44,7 @@ public class ImportedGoodController {
     @PutMapping("/{id}")
     public ResponseEntity<ImportedGood> updateImportedGood(@PathVariable Long id, @RequestBody ImportedGood updatedImportedGood) {
         updatedImportedGood.setId(id);
-        ImportedGood updatedImportedGoodData = ImportedGoodService.updateImportedGood(updatedImportedGood);
+        ImportedGood updatedImportedGoodData = ImportedGoodService.updateImportedGood(id,updatedImportedGood);
         if (updatedImportedGoodData != null) {
             return new ResponseEntity<>(updatedImportedGoodData, HttpStatus.OK);
         } else {

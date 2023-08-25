@@ -23,8 +23,8 @@ public class ImportedGoodService{
     public ImportedGood createImportedGood(ImportedGood seo) {
         return importedGoodRepository.save(seo);
     }
-    public ImportedGood updateImportedGood(ImportedGood updatedImportedGood) {
-        ImportedGood existingImportedGood = importedGoodRepository.findById(updatedImportedGood.getId()).orElse(null);
+    public ImportedGood updateImportedGood(Long id, ImportedGood updatedImportedGood) {
+        ImportedGood existingImportedGood = importedGoodRepository.findById(id).orElse(null);
         if (existingImportedGood != null) {
             existingImportedGood.setNote(updatedImportedGood.getNote());
             existingImportedGood.setPrice(updatedImportedGood.getPrice());

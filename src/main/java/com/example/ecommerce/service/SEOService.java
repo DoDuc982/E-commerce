@@ -28,8 +28,8 @@ public class SEOService {
     public void deleteSEO(Long id) {
         seoRepository.deleteById(id);
     }
-    public SEO updateSEO(SEO updatedSEO) {
-        SEO existingSEO = seoRepository.findById(updatedSEO.getId()).orElse(null);
+    public SEO updateSEO(Long id, SEO updatedSEO) {
+        SEO existingSEO = seoRepository.findById(id).orElse(null);
         if (existingSEO != null) {
             existingSEO.setKeyword(updatedSEO.getKeyword());
             existingSEO.setSearchVolume(updatedSEO.getSearchVolume());

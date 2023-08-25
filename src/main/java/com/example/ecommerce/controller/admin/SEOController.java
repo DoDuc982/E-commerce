@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller;
+package com.example.ecommerce.controller.admin;
 
 import com.example.ecommerce.model.SEO;
 import com.example.ecommerce.service.SEOService;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/seo")
+@RequestMapping("/admin/api/seo")
 public class SEOController {
     private final SEOService seoService;
 
@@ -50,7 +50,7 @@ public class SEOController {
     @PutMapping("/{id}")
     public ResponseEntity<SEO> updateSEO(@PathVariable Long id, @RequestBody SEO updatedSEO) {
         updatedSEO.setId(id);
-        SEO updatedSEOData = seoService.updateSEO(updatedSEO);
+        SEO updatedSEOData = seoService.updateSEO(id, updatedSEO);
         if (updatedSEOData != null) {
             return new ResponseEntity<>(updatedSEOData, HttpStatus.OK);
         } else {

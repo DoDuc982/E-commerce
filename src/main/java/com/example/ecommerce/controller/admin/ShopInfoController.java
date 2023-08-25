@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller;
+package com.example.ecommerce.controller.admin;
 import com.example.ecommerce.model.ShopInfo;
 import com.example.ecommerce.service.ShopInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shop_info")
+@RequestMapping("/admin/api/shop_info")
 public class ShopInfoController {
     private final ShopInfoService ShopInfoService;
 
@@ -50,7 +50,7 @@ public class ShopInfoController {
     @PutMapping("/{id}")
     public ResponseEntity<ShopInfo> updateShopInfo(@PathVariable Long id, @RequestBody ShopInfo updatedShopInfo) {
         updatedShopInfo.setId(id);
-        ShopInfo updatedShopInfoData = ShopInfoService.updateShopInfo(updatedShopInfo);
+        ShopInfo updatedShopInfoData = ShopInfoService.updateShopInfo(id, updatedShopInfo);
         if (updatedShopInfoData != null) {
             return new ResponseEntity<>(updatedShopInfoData, HttpStatus.OK);
         } else {

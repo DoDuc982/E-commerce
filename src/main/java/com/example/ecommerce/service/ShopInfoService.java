@@ -25,8 +25,8 @@ public class ShopInfoService {
     public void deleteShopInfo(Long id) {
         ShopInfoRepository.deleteById(id);
     }
-    public ShopInfo updateShopInfo(ShopInfo updatedShopInfo) {
-        ShopInfo existingShopInfo = ShopInfoRepository.findById(updatedShopInfo.getId()).orElse(null);
+    public ShopInfo updateShopInfo(Long id, ShopInfo updatedShopInfo) {
+        ShopInfo existingShopInfo = ShopInfoRepository.findById(id).orElse(null);
         if (existingShopInfo != null) {
             existingShopInfo.setUrl(updatedShopInfo.getUrl());
             existingShopInfo.setSocial(updatedShopInfo.getSocial());
