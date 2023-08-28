@@ -1,12 +1,10 @@
 package com.example.ecommerce.DTO.mapper;
 
+import com.example.ecommerce.DTO.response.CartItemResponseDTO;
 import com.example.ecommerce.DTO.response.CategoryResponseDTO;
 import com.example.ecommerce.DTO.response.ProductResponseDTO;
 import com.example.ecommerce.DTO.response.UserResponseDTO;
-import com.example.ecommerce.model.Address;
-import com.example.ecommerce.model.Category;
-import com.example.ecommerce.model.Product;
-import com.example.ecommerce.model.User;
+import com.example.ecommerce.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +47,18 @@ public class Mapper {
                 .createdOn(user.getCreatedOn())
                 .name(user.getName())
                 .addresses(addresses)
+                .build();
+    }
+    public static CartItemResponseDTO cartItemToCartItemResponseDTO (CartItem cartItem){
+
+        return CartItemResponseDTO.builder()
+                .userId(cartItem.getUser().getId())
+                .username(cartItem.getUser().getName())
+                .phoneNumber(cartItem.getUser().getPhoneNumber())
+                .productName(cartItem.getProduct().getName())
+                .productUrl(cartItem.getProduct().getImageUrl())
+                .productPrice(cartItem.getProduct().getPrice())
+                .quantity(cartItem.getQuantity())
                 .build();
     }
 }

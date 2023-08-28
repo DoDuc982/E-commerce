@@ -26,6 +26,8 @@ public class Product {
     private Long quantity;
     private Long soldQuantity;
     private String content;
+
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

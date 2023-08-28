@@ -31,8 +31,7 @@ public class CategoryService {
         return Mapper.categoryTocategoryResponseDTO(category);
     }
     public CategoryResponseDTO getCategoryById (Long id){
-        Category categoryOptional = this.getIdCategory(id);
-        return Mapper.categoryTocategoryResponseDTO(categoryOptional);
+        return Mapper.categoryTocategoryResponseDTO(this.getIdCategory(id));
     }
     public List<CategoryResponseDTO> getAllCategories(){
         List<Category> categories = categoryRepository.findAll().stream().toList();
