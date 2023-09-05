@@ -33,10 +33,19 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    public OrderItem(Product product, Order order) {
+        this.product = product;
+        this.order = order;
+
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.discountPrice = product.getDiscountPrice();
+        this.imageUrl = product.getImageUrl();
+    }
 }
 
 

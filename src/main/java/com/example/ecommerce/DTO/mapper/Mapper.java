@@ -1,9 +1,6 @@
 package com.example.ecommerce.DTO.mapper;
 
-import com.example.ecommerce.DTO.response.CartItemResponseDTO;
-import com.example.ecommerce.DTO.response.CategoryResponseDTO;
-import com.example.ecommerce.DTO.response.ProductResponseDTO;
-import com.example.ecommerce.DTO.response.UserResponseDTO;
+import com.example.ecommerce.DTO.response.*;
 import com.example.ecommerce.model.*;
 
 import java.util.ArrayList;
@@ -59,6 +56,40 @@ public class Mapper {
                 .productUrl(cartItem.getProduct().getImageUrl())
                 .productPrice(cartItem.getProduct().getPrice())
                 .quantity(cartItem.getQuantity())
+                .build();
+    }
+    public static OrderItemResponseDTO orderItemToOrderItemResponseDTO(OrderItem orderItem){
+        return OrderItemResponseDTO.builder()
+                .name(orderItem.getName())
+                .price(orderItem.getPrice())
+                .quantity(orderItem.getQuantity())
+                .imageUrl(orderItem.getImageUrl())
+                .discountPrice(orderItem.getDiscountPrice()) // can luu y khi apply ma giam gia,...
+                .totalPrice((orderItem.getPrice() - orderItem.getDiscountPrice()) * orderItem.getQuantity())
+                .createdOn(orderItem.getCreatedOn())
+                .updatedOn(orderItem.getUpdatedOn())
+                .build();
+    }
+    public static OrderInfoResponseDTO orderInfoToOrderInfoResponseDTO(Order order){
+        double sum = 0;
+        for (OrderItem orderItem : order.getOrderItems()) {
+            sum += ((orderItem.getPrice() - orderItem.getDiscountPrice())*orderItem.getQuantity());
+        }
+        return OrderInfoResponseDTO.builder()
+                .subTotal(sum)
+                .shippingPrice(order.getShippingPrice())
+                .total(sum - order.getShippingPrice())
+                .discount(order.getDiscount())
+                .grandTotal(sum - order.getShippingPrice()) //phan nay cam xem lai khi app ma giam gia
+                .firstname(order.getFirstname())
+                .lastname(order.getLastname())
+                .mobile(order.getMobile())
+                .email(order.getEmail())
+                .address(order.getAddress())
+                .district(order.getDistrict())
+                .city(order.getCity())
+                .province(order.getProvince())
+                .content(order.getContent())
                 .build();
     }
 }
