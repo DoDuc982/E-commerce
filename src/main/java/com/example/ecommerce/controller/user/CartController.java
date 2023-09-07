@@ -24,13 +24,22 @@ public class CartController {
         cartItemService.removeFromCart(userId, productId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PutMapping("/{userId}/updateQuantity/{productId}")
+    @PutMapping("/{userId}/update_product/{productId}")
     public ResponseEntity<Void> updateCartItem(
             @PathVariable Long userId,
             @PathVariable Long productId,
             @RequestParam Integer quantity
     ) {
         cartItemService.updateCartItem(userId, productId, quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/{userId}/add_product/{productId}")
+    public ResponseEntity<Void> addCartItem(
+            @PathVariable Long userId,
+            @PathVariable Long productId,
+            @RequestParam Integer quantity
+    ) {
+        cartItemService.addToCart(userId, productId, quantity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

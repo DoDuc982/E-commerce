@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -74,6 +75,9 @@ public class ProductService {
     }
     public void deleteProduct(Long id){
         productRepository.deleteById(this.getProduct(id).getId());
+    }
+    public List<ProductResponseDTO> getProductsByCategoryId(Long categoryId) {
+        return Collections.singletonList(Mapper.productToProductResponseDTO((Product) productRepository.findByCategoryId(categoryId).stream()));
     }
 }
 
