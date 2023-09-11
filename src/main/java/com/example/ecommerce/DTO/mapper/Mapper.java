@@ -46,12 +46,19 @@ public class Mapper {
                 .addresses(addresses)
                 .build();
     }
+    public static AddressResponseDTO addressToAddressResponseDTO(Address address){
+        return AddressResponseDTO.builder()
+                .address(address.getAddress())
+                .province(address.getProvince())
+                .district(address.getDistrict())
+                .city(address.getCity())
+                .build();
+    }
     public static CartItemResponseDTO cartItemToCartItemResponseDTO (CartItem cartItem){
 
         return CartItemResponseDTO.builder()
                 .userId(cartItem.getUser().getId())
                 .username(cartItem.getUser().getName())
-                .phoneNumber(cartItem.getUser().getPhoneNumber())
                 .productName(cartItem.getProduct().getName())
                 .productUrl(cartItem.getProduct().getImageUrl())
                 .productPrice(cartItem.getProduct().getPrice())
@@ -78,9 +85,9 @@ public class Mapper {
         return OrderInfoResponseDTO.builder()
                 .subTotal(sum)
                 .shippingPrice(order.getShippingPrice())
-                .total(sum - order.getShippingPrice())
+                .total(sum + order.getShippingPrice())
                 .discount(order.getDiscount())
-                .grandTotal(sum - order.getShippingPrice()) //phan nay cam xem lai khi app ma giam gia
+                .grandTotal(sum) //phan nay cam xem lai khi app ma giam gia
                 .firstname(order.getFirstname())
                 .lastname(order.getLastname())
                 .mobile(order.getMobile())

@@ -26,12 +26,11 @@ public class Product {
     private Long quantity;
     private Long soldQuantity;
     private String content;
-
-
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

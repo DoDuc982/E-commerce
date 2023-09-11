@@ -20,9 +20,12 @@ public class OrderItemController {
         this.orderItemService = orderItemService;
     }
 
+    /*
     @GetMapping("/user/{id}")
     public ResponseEntity<List<OrderItemResponseDTO>> getAllItemByOrderId(@PathVariable Long id){
         List<OrderItemResponseDTO> orderItemResponseDTOS = orderItemService.getItemOfAnOrder(id);
         return new ResponseEntity<>(orderItemResponseDTOS, HttpStatus.OK);
     }
+
+     */
 }

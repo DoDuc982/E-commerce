@@ -20,9 +20,9 @@ public class CartItemController {
     public CartItemController(CartItemService cartItemService){
         this.cartItemService = cartItemService;
     }
-    @GetMapping("/{user_id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<List<CartItemResponseDTO>> getAllCartItemOfAnUser(@PathVariable Long userId){
-        if (cartItemService.getAllCartItem(userId) != null) {
+        if (!cartItemService.getAllCartItem(userId).isEmpty()) {
             return new ResponseEntity<>(cartItemService.getAllCartItem(userId), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

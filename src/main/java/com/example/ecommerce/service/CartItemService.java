@@ -27,21 +27,10 @@ public class CartItemService {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
     }
-
-    public CartItem getCartItem(Long id){
-        return cartItemRepository.findById(id).orElseThrow(()->
-                new IllegalArgumentException("could not find cart item with id: " + id));
-    }
     public List<CartItemResponseDTO> getAllCartItem(Long userId){
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            List<CartItem> cartItems = user.getCartItems();
-            return cartItems.stream()
-                    .map(Mapper::cartItemToCartItemResponseDTO)
-                    .collect(Collectors.toList());
-        } else {
-            return null;
-        }
+        return cartItemRepository.findAllCartItemByUserId(userId).stream()
+                .map(Mapper::cartItemToCartItemResponseDTO)
+                .collect(Collectors.toList());
     }
     public void addToCart(Long userId, Long productId, Integer quantity){
         for (CartItem cartItem : cartItemRepository.findAll()) {
@@ -61,12 +50,7 @@ public class CartItemService {
         cartItemRepository.save(cartItem);
     }
     public void updateCartItem(Long userId, Long productId, Integer quantity) {
-        List<CartItem> cartItems = new ArrayList<>();
-        for (CartItem cartItem : cartItemRepository.findAll()){
-            if (Objects.equals(cartItem.getUser().getId(), userId)){
-                cartItems.add(cartItem);
-            }
-        }
+        List<CartItem> cartItems = cartItemRepository.findAllCartItemByUserId(userId);
         for (CartItem cartItem : cartItems) {
             if (Objects.equals(cartItem.getProduct().getId(), productId)) {
                 cartItem.setQuantity(quantity);
@@ -75,12 +59,7 @@ public class CartItemService {
         }
     }
     public void removeFromCart(Long userId, Long productId) {
-        List<CartItem> cartItems = new ArrayList<>();
-        for (CartItem cartItem : cartItemRepository.findAll()){
-            if (Objects.equals(cartItem.getUser().getId(), userId)){
-                cartItems.add(cartItem);
-            }
-        }
+        List<CartItem> cartItems = cartItemRepository.findAllCartItemByUserId(userId);
         for (CartItem cartItem : cartItems) {
             if (Objects.equals(cartItem.getProduct().getId(), productId)) {
                 cartItemRepository.delete(cartItem);

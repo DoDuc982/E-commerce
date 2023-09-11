@@ -23,7 +23,7 @@ public class OrderItem {
     private Double price;
     private Double discountPrice;
     private String imageUrl;
-    private Long quantity;
+    private Integer quantity;
     private Double totalPrice;
     @CreationTimestamp
     private LocalDateTime createdOn;
@@ -31,21 +31,8 @@ public class OrderItem {
     private LocalDateTime updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
-    public OrderItem(Product product, Order order) {
-        this.product = product;
-        this.order = order;
-
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.discountPrice = product.getDiscountPrice();
-        this.imageUrl = product.getImageUrl();
-    }
 }
 
 

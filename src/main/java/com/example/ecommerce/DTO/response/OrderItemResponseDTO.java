@@ -12,7 +12,7 @@ public class OrderItemResponseDTO {
     private Double price;
     private Double discountPrice;
     private String imageUrl;
-    private Long quantity;
+    private Integer quantity;
     private Double totalPrice;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;

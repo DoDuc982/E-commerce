@@ -22,7 +22,7 @@ public class CartItem {
     private LocalDateTime updatedOn;
     private Integer quantity = 0;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne

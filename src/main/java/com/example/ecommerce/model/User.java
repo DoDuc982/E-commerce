@@ -29,7 +29,7 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -24,10 +24,12 @@ public class Category {
     private Long id;
     private String name;
     private String content;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
+
 }

@@ -4,11 +4,13 @@ import com.example.ecommerce.DTO.mapper.Mapper;
 import com.example.ecommerce.DTO.response.OrderInfoResponseDTO;
 import com.example.ecommerce.model.Order;
 import com.example.ecommerce.repository.OrderInfoRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderInfoService {
@@ -31,4 +33,12 @@ public class OrderInfoService {
         }
         return orderInfoResponseDTOS;
     }
+    /*
+    public List<OrderInfoResponseDTO> getAllOrderOfAnUser(Long userId) {
+        return orderInfoRepository.findAllOrdersByUserId(userId).stream()
+                .map(Mapper::orderInfoToOrderInfoResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+     */
 }
