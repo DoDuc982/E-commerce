@@ -9,6 +9,6 @@ import java.lang.constant.ConstantDesc;
 import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
-    @Query("SELECT ci FROM Address ci WHERE ci.user.id = :userId")
+    @Query("SELECT ci FROM address ci WHERE ci.user.id = :userId")
     List<Address> findAllAddressByUserId(ConstantDesc userId);
 }

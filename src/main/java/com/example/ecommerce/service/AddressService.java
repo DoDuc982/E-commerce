@@ -17,7 +17,11 @@ public class AddressService {
     public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
-
+    public List<AddressResponseDTO> getAllAddress(){
+        return addressRepository.findAll().stream()
+                .map(Mapper::addressToAddressResponseDTO)
+                .collect(Collectors.toList());
+    }
     public List<AddressResponseDTO> getAllAddressOfUser(Long userId){
         return addressRepository.findAllAddressByUserId(userId).stream()
                 .map(Mapper::addressToAddressResponseDTO)

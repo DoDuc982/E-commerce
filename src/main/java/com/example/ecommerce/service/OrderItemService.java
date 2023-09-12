@@ -26,15 +26,13 @@ public class OrderItemService {
     public List<OrderItem> getAllOrderItem(){
         return orderItemRepository.findAll();
     }
-    /*
     public List<OrderItemResponseDTO> getItemOfAnOrder(Long id){
-        List<OrderItem> orderItems = orderItemRepository.findByOrderId(id);
+        List<OrderItem> orderItems = orderItemRepository.findAll();
         return orderItems.stream()
                 .map(Mapper::orderItemToOrderItemResponseDTO)
                 .collect(Collectors.toList());
     }
 
-     */
     public void cartToOrderItem(Long userId){
         /*
         OrderItem orderItem = new OrderItem();
