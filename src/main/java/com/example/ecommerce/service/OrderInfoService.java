@@ -26,19 +26,13 @@ public class OrderInfoService {
         return Mapper.orderInfoToOrderInfoResponseDTO(this.getOrderInfo(id));
     }
     public List<OrderInfoResponseDTO> getAllOrderInfo(){
-        List<Order> orders = orderInfoRepository.findAll();
-        List<OrderInfoResponseDTO> orderInfoResponseDTOS = new ArrayList<>();
-        for (Order order : orders) {
-            orderInfoResponseDTOS.add(Mapper.orderInfoToOrderInfoResponseDTO(order));
-        }
-        return orderInfoResponseDTOS;
+        return orderInfoRepository.findAll().stream()
+                .map(Mapper::orderInfoToOrderInfoResponseDTO)
+                .collect(Collectors.toList());
     }
-    /*
     public List<OrderInfoResponseDTO> getAllOrderOfAnUser(Long userId) {
         return orderInfoRepository.findAllOrdersByUserId(userId).stream()
                 .map(Mapper::orderInfoToOrderInfoResponseDTO)
                 .collect(Collectors.toList());
     }
-
-     */
 }

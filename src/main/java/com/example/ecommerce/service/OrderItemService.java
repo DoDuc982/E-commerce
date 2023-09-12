@@ -22,21 +22,15 @@ public class OrderItemService {
         this.orderItemRepository = orderItemRepository;
         this.cartItemRepository = cartItemRepository;
     }
-
-    public List<OrderItem> getAllOrderItem(){
-        return orderItemRepository.findAll();
-    }
     public List<OrderItemResponseDTO> getItemOfAnOrder(Long id){
-        List<OrderItem> orderItems = orderItemRepository.findAll();
-        return orderItems.stream()
+        return orderItemRepository.findByOrderId(id).stream()
                 .map(Mapper::orderItemToOrderItemResponseDTO)
                 .collect(Collectors.toList());
     }
 
     public void cartToOrderItem(Long userId){
-        /*
         OrderItem orderItem = new OrderItem();
-        for (CartItem cartItem : cartItemRepository.findByUserId(userId)){
+        for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)){
             orderItem.setImageUrl(cartItem.getProduct().getImageUrl());
             orderItem.setName(cartItem.getProduct().getName());
             orderItem.setPrice(cartItem.getProduct().getPrice());
@@ -44,7 +38,5 @@ public class OrderItemService {
             orderItem.setTotalPrice(cartItem.getQuantity() * cartItem.getProduct().getPrice());
             orderItemRepository.save(orderItem);
         }
-
-         */
     }
 }

@@ -20,12 +20,17 @@ public class OrderInfoController {
     public OrderInfoController(OrderInfoService orderInfoService) {
         this.orderInfoService = orderInfoService;
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderInfoResponseDTO> getOrderInfo(@PathVariable Long id){
-        return new ResponseEntity<>(orderInfoService.getOrderInfoById(id), HttpStatus.OK);
-    }
     @GetMapping()
     public ResponseEntity<List<OrderInfoResponseDTO>> getAllOrderInfo(){
         return new ResponseEntity<>(orderInfoService.getAllOrderInfo(),HttpStatus.OK);
     }
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<OrderInfoResponseDTO>> getOrderInfoOfAnUser(@PathVariable Long userId){
+        return new ResponseEntity<>(orderInfoService.getAllOrderOfAnUser(userId), HttpStatus.OK);
+    }
+    @GetMapping("/info/{orderId}")
+    public ResponseEntity<OrderInfoResponseDTO> getOrderInfo(@PathVariable Long orderId){
+        return new ResponseEntity<>(orderInfoService.getOrderInfoById(orderId), HttpStatus.OK);
+    }
+
 }
