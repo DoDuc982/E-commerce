@@ -28,7 +28,7 @@ public class UProductController {
     public ResponseEntity<ProductResponseDTO> getProductInfo(@PathVariable Long id){
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
-    @GetMapping("/category/{category_id}")
+    @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<ProductResponseDTO>> getProductByCategory(@PathVariable Long categoryId){
         return new ResponseEntity<>(productService.getProductsByCategoryId(categoryId), HttpStatus.OK);
     }

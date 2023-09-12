@@ -33,13 +33,11 @@ public class CartItemService {
                 .collect(Collectors.toList());
     }
     public void addToCart(Long userId, Long productId, Integer quantity){
-        for (CartItem cartItem : cartItemRepository.findAll()) {
-            if (Objects.equals(cartItem.getUser().getId(), userId)) {
-                if (cartItem.getProduct().getId().equals(productId)) {
-                    cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                    cartItemRepository.save(cartItem);
-                    return;
-                }
+        for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
+            if (cartItem.getProduct().getId().equals(productId)) {
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                cartItemRepository.save(cartItem);
+                return;
             }
         }
         CartItem cartItem = new CartItem();
@@ -50,8 +48,7 @@ public class CartItemService {
         cartItemRepository.save(cartItem);
     }
     public void updateCartItem(Long userId, Long productId, Integer quantity) {
-        List<CartItem> cartItems = cartItemRepository.findAllCartItemByUserId(userId);
-        for (CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
             if (Objects.equals(cartItem.getProduct().getId(), productId)) {
                 cartItem.setQuantity(quantity);
                 cartItemRepository.save(cartItem);
@@ -59,8 +56,7 @@ public class CartItemService {
         }
     }
     public void removeFromCart(Long userId, Long productId) {
-        List<CartItem> cartItems = cartItemRepository.findAllCartItemByUserId(userId);
-        for (CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
             if (Objects.equals(cartItem.getProduct().getId(), productId)) {
                 cartItemRepository.delete(cartItem);
             }
