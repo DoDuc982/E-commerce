@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -77,7 +78,9 @@ public class ProductService {
         productRepository.deleteById(this.getProduct(id).getId());
     }
     public List<ProductResponseDTO> getProductsByCategoryId(Long categoryId) {
-        return Collections.singletonList(Mapper.productToProductResponseDTO((Product) productRepository.findByCategoryId(categoryId).stream()));
+        return productRepository.findByCategoryId(categoryId).stream()
+                .map(Mapper::productToProductResponseDTO)
+                .collect(Collectors.toList());
     }
 }
 
