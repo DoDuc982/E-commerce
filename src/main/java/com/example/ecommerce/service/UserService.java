@@ -1,8 +1,10 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.DTO.mapper.Mapper;
+import com.example.ecommerce.DTO.request.RegisterRequestDTO;
 import com.example.ecommerce.DTO.request.UserRequestDTO;
 import com.example.ecommerce.DTO.response.UserResponseDTO;
+import com.example.ecommerce.model.Role;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,20 @@ public class UserService {
         //Còn phần order và invoice
         userRepository.save(user);
         return Mapper.userToUserResponseDTO(user);
+    }
+    public User findByUser(String username){
+        return userRepository.findByUsername(username);
+    }
+    public Boolean register(RegisterRequestDTO registerRequestDTO){
+        if(userRepository.findByUsername(registerRequestDTO.getUsername()) == null){
+            User user = new User();
+            user.setUsername(registerRequestDTO.getUsername());
+            user.setPhoneNumber(registerRequestDTO.getPhoneNumber());
+            user.setPassword(registerRequestDTO.getPassword());
+            user.setSex(registerRequestDTO.isSex());
+            user.setRole(Role.valueOf("USER"));
+            userRepository.save(user);
+            return true;
+        } else return false;
     }
 }
