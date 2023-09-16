@@ -8,19 +8,27 @@ import com.example.ecommerce.model.Role;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserResponseDTO> getAllUsers() {
@@ -60,19 +68,26 @@ public class UserService {
         userRepository.save(user);
         return Mapper.userToUserResponseDTO(user);
     }
-    public User findByUser(String username){
-        return userRepository.findByUsername(username);
-    }
     public Boolean register(RegisterRequestDTO registerRequestDTO){
-        if(userRepository.findByUsername(registerRequestDTO.getUsername()) == null){
+        if(userRepository.findByUsername(registerRequestDTO.getUsername()).isEmpty()){
             User user = new User();
             user.setUsername(registerRequestDTO.getUsername());
             user.setPhoneNumber(registerRequestDTO.getPhoneNumber());
-            user.setPassword(registerRequestDTO.getPassword());
+            user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
             user.setSex(registerRequestDTO.isSex());
             user.setRole(Role.valueOf("USER"));
             userRepository.save(user);
             return true;
         } else return false;
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username).orElseThrow(null);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),mapRolesToAuthorities(user.getRole()));
+    }
+    private Collection<GrantedAuthority> mapRolesToAuthorities(Role role){
+        String roleName = role.name();
+        String authority = "ROLE_" + roleName; // Thêm "ROLE_" theo quy ước Spring Security
+        return List.of(new SimpleGrantedAuthority(authority));
     }
 }
