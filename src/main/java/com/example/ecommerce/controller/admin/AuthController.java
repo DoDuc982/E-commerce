@@ -6,6 +6,7 @@ import com.example.ecommerce.model.Role;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.UserRepository;
 import com.example.ecommerce.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +21,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
-
-    public AuthController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public AuthController(AuthenticationManager authenticationManager, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequestDTO registerRequestDTO){
