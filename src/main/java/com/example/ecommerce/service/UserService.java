@@ -8,8 +8,11 @@ import com.example.ecommerce.model.Role;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,6 +34,10 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public Long getUserIdByUsername(String username){
+        return userRepository.findIdByUsername(username);
+    }
+
     public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
@@ -40,12 +47,13 @@ public class UserService implements UserDetailsService {
         return userResponseDTOS;
     }
 
-    public User getUserId(Long id) {
+    public User getByUserId(Long id) {
         return userRepository.findById(id)
                 .orElse(null);
     }
+
     public UserResponseDTO getUserById(Long id){
-        return Mapper.userToUserResponseDTO(this.getUserId(id));
+        return Mapper.userToUserResponseDTO(this.getByUserId(id));
     }
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
@@ -59,7 +67,7 @@ public class UserService implements UserDetailsService {
         return Mapper.userToUserResponseDTO(user);
     }
     public UserResponseDTO updateUser(Long id, UserRequestDTO updatedUser) {
-        User user = getUserId(id);
+        User user = getByUserId(id);
         user.setName(updatedUser.getName());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
         user.setSex(updatedUser.isSex());
