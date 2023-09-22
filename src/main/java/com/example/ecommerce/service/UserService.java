@@ -88,6 +88,15 @@ public class UserService implements UserDetailsService {
             return true;
         } else return false;
     }
+    public UserResponseDTO updateUserForUser(Long id, UserRequestDTO updatedUser) {
+        User user = getByUserId(id);
+        user.setName(updatedUser.getName());
+        user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setSex(updatedUser.isSex());
+        //Còn phần order và invoice
+        userRepository.save(user);
+        return Mapper.userToUserResponseDTO(user);
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(null);

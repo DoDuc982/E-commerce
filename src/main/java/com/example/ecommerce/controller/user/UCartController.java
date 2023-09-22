@@ -28,7 +28,7 @@ public class UCartController {
     }
     @GetMapping()
     public ResponseEntity<List<CartItemResponseDTO>> getAllCartItem(HttpServletRequest request) {
-        String token = getJwtFromRequest(request);
+        String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
             List<CartItemResponseDTO> cartItems = cartItemService.getAllCartItem(userId);
@@ -42,7 +42,7 @@ public class UCartController {
             @PathVariable Long productId,
             HttpServletRequest request
     ) {
-        String token = getJwtFromRequest(request);
+        String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
             cartItemService.removeFromCart(userId, productId);
@@ -57,7 +57,7 @@ public class UCartController {
             @RequestBody Map<String, Integer> requestBody,
             HttpServletRequest request
     ) {
-        String token = getJwtFromRequest(request);
+        String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
             Integer quantity = requestBody.get("quantity");
@@ -73,7 +73,7 @@ public class UCartController {
             @RequestBody Map<String, Integer> requestBody,
             HttpServletRequest request
     ) {
-        String token = getJwtFromRequest(request);
+        String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
             Integer quantity = requestBody.get("quantity");
@@ -81,12 +81,5 @@ public class UCartController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-    private String getJwtFromRequest(HttpServletRequest request){
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
     }
 }
