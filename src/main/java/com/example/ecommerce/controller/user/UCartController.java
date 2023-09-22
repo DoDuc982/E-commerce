@@ -6,9 +6,11 @@ import com.example.ecommerce.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -17,40 +19,74 @@ import java.util.Map;
 public class UCartController {
     @Autowired
     private final CartItemService cartItemService;
+    @Autowired
+    private final JwtGenerator jwtGenerator;
 
-    public UCartController(CartItemService cartItemService) {
+    public UCartController(CartItemService cartItemService, JwtGenerator jwtGenerator) {
         this.cartItemService = cartItemService;
+        this.jwtGenerator = jwtGenerator;
     }
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<CartItemResponseDTO>> getAllCartItem(@PathVariable Long userId){
-        return new ResponseEntity<>(cartItemService.getAllCartItem(userId), HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<List<CartItemResponseDTO>> getAllCartItem(HttpServletRequest request) {
+        String token = getJwtFromRequest(request);
+        if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
+            Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
+            List<CartItemResponseDTO> cartItems = cartItemService.getAllCartItem(userId);
+            return ResponseEntity.ok(cartItems);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.emptyList());
     }
-    @DeleteMapping("/{userId}/remove/{productId}")
+
+    @DeleteMapping("/{productId}")
     public ResponseEntity<Void> removeFromCart(
-            @PathVariable Long userId,
-            @PathVariable Long productId
+            @PathVariable Long productId,
+            HttpServletRequest request
     ) {
-        cartItemService.removeFromCart(userId, productId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String token = getJwtFromRequest(request);
+        if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
+            Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
+            cartItemService.removeFromCart(userId, productId);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    @PutMapping("/{userId}/update_product/{productId}")
+
+    @PutMapping("/{productId}")
     public ResponseEntity<Void> updateCartItem(
-            @PathVariable Long userId,
             @PathVariable Long productId,
-            @RequestBody Map<String, Integer> requestBody
+            @RequestBody Map<String, Integer> requestBody,
+            HttpServletRequest request
     ) {
-        Integer quantity = requestBody.get("quantity");
-        cartItemService.updateCartItem(userId, productId, quantity);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String token = getJwtFromRequest(request);
+        if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
+            Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
+            Integer quantity = requestBody.get("quantity");
+            cartItemService.updateCartItem(userId, productId, quantity);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    @PostMapping("/{userId}/add_product/{productId}")
+
+    @PostMapping("/{productId}")
     public ResponseEntity<Void> addCartItem(
-            @PathVariable Long userId,
             @PathVariable Long productId,
-            @RequestBody Map<String, Integer> requestBody
+            @RequestBody Map<String, Integer> requestBody,
+            HttpServletRequest request
     ) {
-        Integer quantity = requestBody.get("quantity");
-        cartItemService.addToCart(userId, productId, quantity);
-        return new ResponseEntity<>(HttpStatus.OK);
+        String token = getJwtFromRequest(request);
+        if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
+            Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT
+            Integer quantity = requestBody.get("quantity");
+            cartItemService.addToCart(userId, productId, quantity);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+    private String getJwtFromRequest(HttpServletRequest request){
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
     }
 }
