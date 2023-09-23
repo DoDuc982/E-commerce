@@ -22,12 +22,6 @@ public class OrderItemService {
         this.orderItemRepository = orderItemRepository;
         this.cartItemRepository = cartItemRepository;
     }
-    public List<OrderItemResponseDTO> getItemOfAnOrder(Long id){
-        return orderItemRepository.findByOrderId(id).stream()
-                .map(Mapper::orderItemToOrderItemResponseDTO)
-                .collect(Collectors.toList());
-    }
-
     public void cartToOrderItem(Long userId){
         OrderItem orderItem = new OrderItem();
         for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)){

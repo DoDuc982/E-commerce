@@ -71,23 +71,19 @@ public class Mapper {
                 .price(orderItem.getPrice())
                 .quantity(orderItem.getQuantity())
                 .imageUrl(orderItem.getImageUrl())
-                .discountPrice(orderItem.getDiscountPrice()) // can luu y khi apply ma giam gia,...
-                .totalPrice((orderItem.getPrice() - orderItem.getDiscountPrice()) * orderItem.getQuantity())
+                .totalPrice(orderItem.getTotalPrice())
                 .createdOn(orderItem.getCreatedOn())
                 .updatedOn(orderItem.getUpdatedOn())
                 .build();
     }
     public static OrderInfoResponseDTO orderInfoToOrderInfoResponseDTO(Order order){
-        double sum = 0;
-        for (OrderItem orderItem : order.getOrderItems()) {
-            sum += ((orderItem.getPrice() - orderItem.getDiscountPrice())*orderItem.getQuantity());
-        }
+
         return OrderInfoResponseDTO.builder()
-                .subTotal(sum)
+                .subTotal(order.getSubTotal())
                 .shippingPrice(order.getShippingPrice())
-                .total(sum + order.getShippingPrice())
+                .total(order.getTotal())
                 .discount(order.getDiscount())
-                .grandTotal(sum) //phan nay cam xem lai khi app ma giam gia
+                .grandTotal(order.getGrandTotal()) //phan nay cam xem lai khi app ma giam gia
                 .firstname(order.getFirstname())
                 .lastname(order.getLastname())
                 .mobile(order.getMobile())
