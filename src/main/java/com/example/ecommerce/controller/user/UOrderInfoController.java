@@ -47,7 +47,7 @@ public class UOrderInfoController {
         String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token);
-            return new ResponseEntity<>(orderInfoService., HttpStatus.OK);
+            return new ResponseEntity<>(orderInfoService.postInfo(orderInfoRequestDTO, userId), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

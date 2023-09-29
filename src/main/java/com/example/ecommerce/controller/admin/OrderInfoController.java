@@ -30,7 +30,7 @@ public class OrderInfoController {
     }
     @GetMapping("/info/{orderId}")
     public ResponseEntity<OrderInfoResponseDTO> getOrderInfo(@PathVariable Long orderId){
-        return new ResponseEntity<>(orderInfoService.getOrderInfoById(orderId), HttpStatus.OK);
+        return new ResponseEntity<>(orderInfoService. getOrderInfoById(orderId), HttpStatus.OK);
     }
 
 }

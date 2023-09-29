@@ -22,11 +22,11 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double subTotal;
-    private Double shippingPrice;
-    private Double total;
+    private Double subTotal = (double) 0;
+    private Double shippingPrice = (double) 0;
+    private Double total = (double) 0;
     private String discount;
-    private Double grandTotal;
+    private Double grandTotal = (double) 0;
     private String firstname;
     private String lastname;
     private String mobile;

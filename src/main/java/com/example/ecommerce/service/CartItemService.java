@@ -35,7 +35,7 @@ public class CartItemService {
     public void addToCart(Long userId, Long productId, Integer quantity){
         for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
             if (cartItem.getProduct().getId().equals(productId)) {
-                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                cartItem.setQuantity(quantity);
                 cartItemRepository.save(cartItem);
                 return;
             }

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CartItemRepository extends JpaRepository<CartItem,Long> {
     @Query("SELECT ci FROM cart_item ci WHERE ci.user.id = :userId")
-    List<CartItem> findAllCartItemByUserId(ConstantDesc userId);
+    List<CartItem> findAllCartItemByUserId(Long userId);
 }
