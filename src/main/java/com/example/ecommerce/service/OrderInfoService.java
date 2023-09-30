@@ -3,6 +3,7 @@ package com.example.ecommerce.service;
 import com.example.ecommerce.DTO.mapper.Mapper;
 import com.example.ecommerce.DTO.request.OrderInfoRequestDTO;
 import com.example.ecommerce.DTO.response.OrderInfoResponseDTO;
+import com.example.ecommerce.DTO.response.OrderItemResponseDTO;
 import com.example.ecommerce.model.CartItem;
 import com.example.ecommerce.model.Order;
 import com.example.ecommerce.model.OrderItem;
@@ -75,7 +76,8 @@ public class OrderInfoService {
         }
 
         cartToOrderItem(userId, order.getId());
-        order.setGrandTotal(sum);
+        order.setSubTotal(sum);
+        order.setGrandTotal(sum + order.getShippingPrice());
         orderInfoRepository.save(order);
         return Mapper.orderInfoToOrderInfoResponseDTO(order);
     }

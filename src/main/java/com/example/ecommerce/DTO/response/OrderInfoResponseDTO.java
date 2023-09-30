@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @Builder
 public class OrderInfoResponseDTO {
+    private Long id;
     private Double subTotal;
     private Double shippingPrice;
     private Double total;

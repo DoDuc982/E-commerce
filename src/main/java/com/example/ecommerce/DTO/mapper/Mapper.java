@@ -41,6 +41,7 @@ public class Mapper {
                 .phoneNumber(user.getPhoneNumber())
                 .role(user.getRole())
                 .password(user.getPassword())
+                .email(user.getEmail())
                 .createdOn(user.getCreatedOn())
                 .name(user.getName())
                 .addresses(addresses)
@@ -79,6 +80,7 @@ public class Mapper {
     public static OrderInfoResponseDTO orderInfoToOrderInfoResponseDTO(Order order){
 
         return OrderInfoResponseDTO.builder()
+                .id(order.getId())
                 .subTotal(order.getSubTotal())
                 .shippingPrice(order.getShippingPrice())
                 .total(order.getTotal())

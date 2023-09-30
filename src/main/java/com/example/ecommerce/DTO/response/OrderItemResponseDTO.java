@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class OrderItemResponseDTO {
-    private Long id;
     private String name;
     private Double price;
     private Double discountPrice;

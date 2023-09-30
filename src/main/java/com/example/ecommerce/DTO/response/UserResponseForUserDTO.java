@@ -11,6 +11,7 @@ public class UserResponseForUserDTO {
     private String name;
     private String phoneNumber;
     private String password;
+    private String email;
     private boolean sex;
     private List<String> addresses;
 }

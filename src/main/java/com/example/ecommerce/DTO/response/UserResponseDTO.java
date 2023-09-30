@@ -13,6 +13,7 @@ public class UserResponseDTO {
     private String phoneNumber;
     private String password;
     private boolean sex;
+    private String email;
     private LocalDateTime createdOn;
     private Role role;
     private List<String> addresses;
