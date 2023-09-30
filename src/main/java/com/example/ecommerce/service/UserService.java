@@ -81,6 +81,7 @@ public class UserService implements UserDetailsService {
             User user = new User();
             user.setUsername(registerRequestDTO.getUsername());
             user.setPhoneNumber(registerRequestDTO.getPhoneNumber());
+            user.setEmail(registerRequestDTO.getEmail());
             user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
             user.setSex(registerRequestDTO.isSex());
             user.setRole(Role.valueOf("USER"));
@@ -92,6 +93,7 @@ public class UserService implements UserDetailsService {
         User user = getByUserId(id);
         user.setName(updatedUser.getName());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setEmail(updatedUser.getEmail());
         user.setSex(updatedUser.isSex());
         //Còn phần order và invoice
         userRepository.save(user);

@@ -1,4 +1,4 @@
-package com.example.ecommerce.controller.admin;
+package com.example.ecommerce.controller;
 
 import com.example.ecommerce.DTO.request.LoginRequestDTO;
 import com.example.ecommerce.DTO.request.RegisterRequestDTO;
@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth/api")
 public class AuthController {
@@ -30,7 +32,7 @@ public class AuthController {
         this.emailService = emailService;
     }
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequestDTO registerRequestDTO){
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequestDTO registerRequestDTO){
         if (userService.register(registerRequestDTO)) {
             emailService.sendSimpleMail("beanbhlc2002@gmail.com");
             return new ResponseEntity<>("User registered success!", HttpStatus.OK);}
