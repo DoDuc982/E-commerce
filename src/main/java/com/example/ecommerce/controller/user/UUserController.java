@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,7 @@ public class UUserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @PutMapping
-    public ResponseEntity<UserResponseDTO> updateInfo(HttpServletRequest request, @RequestBody UserRequestDTO userRequestDTO){
+    public ResponseEntity<UserResponseDTO> updateInfo(HttpServletRequest request,@Valid @RequestBody UserRequestDTO userRequestDTO){
         String token = jwtGenerator.getJwtFromRequest(request);
         if (StringUtils.hasText(token) && jwtGenerator.validateToken(token)) {
             Long userId = jwtGenerator.getUserIdFromJwt(token); // Lấy ID người dùng từ JWT

@@ -60,6 +60,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setPassword(userRequestDTO.getPassword());
+        user.setEmail(userRequestDTO.getEmail());
         user.setRole(userRequestDTO.getRole());
         user.setSex(userRequestDTO.isSex());
         user.setPhoneNumber(userRequestDTO.getPhoneNumber());
@@ -69,10 +70,10 @@ public class UserService implements UserDetailsService {
     public UserResponseDTO updateUser(Long id, UserRequestDTO updatedUser) {
         User user = getByUserId(id);
         user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
         user.setPhoneNumber(updatedUser.getPhoneNumber());
         user.setSex(updatedUser.isSex());
         user.setRole(updatedUser.getRole());
-        //Còn phần order và invoice
         userRepository.save(user);
         return Mapper.userToUserResponseDTO(user);
     }
@@ -108,5 +109,9 @@ public class UserService implements UserDetailsService {
         String roleName = role.name();
         String authority = "ROLE_" + roleName; // Thêm "ROLE_" theo quy ước Spring Security
         return List.of(new SimpleGrantedAuthority(authority));
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

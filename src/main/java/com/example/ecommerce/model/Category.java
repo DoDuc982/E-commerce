@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,15 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Name of category is required")
+    @NotEmpty(message = "Name of category is required")
     private String name;
+
+    @NotNull(message = "Content of category is required")
+    @NotEmpty(message = "Content of category is required")
     private String content;
+
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
