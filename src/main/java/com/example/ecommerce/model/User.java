@@ -23,23 +23,19 @@ public class User {
     private Long id;
     private String name;
 
-    @NotNull(message = "Username is required")
     @NotEmpty(message = "Username is required")
     @Size(min = 6, max = 40, message = "Username is too long or too short")
     private String username;
 
-    @NotNull(message = "Email is required")
     @NotEmpty(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotNull(message = "Phone number is required")
     @NotEmpty(message = "Phone number is required")
     @Size(min = 10, max = 10, message = "Phone number must have exactly 10 digits")
     @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
     private String phoneNumber;
 
-    @NotNull(message = "Password is required")
     @NotEmpty(message = "Password is required")
     @Size(min = 8, max = 64)
     private String password;

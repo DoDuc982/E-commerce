@@ -73,6 +73,7 @@ public class OrderInfoService {
         double sum = 0;
         for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
             sum += cartItem.getQuantity() * cartItem.getProduct().getPrice();
+            cartItem.getProduct().setSoldQuantity(cartItem.getQuantity() + cartItem.getProduct().getSoldQuantity());
         }
 
         cartToOrderItem(userId, order.getId());

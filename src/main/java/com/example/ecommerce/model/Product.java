@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -22,21 +23,21 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Name of product is required")
     @NotEmpty(message = "Name of product is required")
     private String name;
 
+    @NotNull(message = "Price is required")
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     private Double price;
 
     private Double discountPrice;
 
-    @NotNull(message = "Image url of product is required")
     @NotEmpty(message = "Image url of product is required")
     private String imageUrl;
 
-    private Long quantity;
+    private Integer quantity;
 
-    private Long soldQuantity;
+    private Integer soldQuantity;
 
     @NotNull(message = "Content of product is required")
     @NotEmpty(message = "Content of product is required")

@@ -25,11 +25,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Name of category is required")
     @NotEmpty(message = "Name of category is required")
     private String name;
 
-    @NotNull(message = "Content of category is required")
     @NotEmpty(message = "Content of category is required")
     private String content;
 
