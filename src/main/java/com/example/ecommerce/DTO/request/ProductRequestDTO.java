@@ -6,11 +6,11 @@ import lombok.Data;
 @Data
 public class ProductRequestDTO {
     private String name;
-    private Double price;
-    private Double discountPrice;
+    private Long price;
+    private Long discountPrice;
     private String imageUrl;
-    private Long quantity;
-    private Long soldQuantity;
+    private Integer quantity;
+    private Integer soldQuantity;
     private String content;
     private Long categoryId;
 }

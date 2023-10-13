@@ -4,7 +4,9 @@ import com.example.ecommerce.DTO.mapper.Mapper;
 import com.example.ecommerce.DTO.request.CategoryRequestDTO;
 import com.example.ecommerce.DTO.response.CategoryResponseDTO;
 import com.example.ecommerce.model.Category;
+import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.CategoryRepository;
+import com.example.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +15,12 @@ import java.util.List;
 
 @Service
 public class CategoryService {
+    private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
     }
     public Category getIdCategory(Long categoryId) {
@@ -48,6 +52,9 @@ public class CategoryService {
         return Mapper.categoryTocategoryResponseDTO(category);
     }
     public void deleteCategory (Long id){
+        for (Product product : productRepository.findByCategoryId(id)) {
+            productRepository.deleteById(product.getId());
+        }
         categoryRepository.deleteById(this.getIdCategory(id).getId());
     }
 

@@ -3,7 +3,7 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.DTO.request.LoginRequestDTO;
 import com.example.ecommerce.DTO.request.RegisterRequestDTO;
 import com.example.ecommerce.DTO.response.AuthResponseDTO;
-import com.example.ecommerce.security.JwtGenerator;
+import com.example.ecommerce.config.JwtGenerator;
 import com.example.ecommerce.service.EmailService;
 import com.example.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

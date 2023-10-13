@@ -1,4 +1,4 @@
-package com.example.ecommerce.security;
+package com.example.ecommerce.config;
 
 import com.example.ecommerce.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -25,7 +25,6 @@ public class JwtGenerator {
     @Autowired
     public JwtGenerator(UserService userService) {
         this.userService = userService;
-        // Tạo một khóa đủ mạnh cho HS256
         this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
@@ -34,19 +33,18 @@ public class JwtGenerator {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
         long userId = userService.getUserIdByUsername(username);
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(username)
                 .claim("user_id", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
-        return token;
     }
     public String getJwtFromRequest(HttpServletRequest request){
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7, bearerToken.length());
+            return bearerToken.substring(7);
         }
         return null;
     }

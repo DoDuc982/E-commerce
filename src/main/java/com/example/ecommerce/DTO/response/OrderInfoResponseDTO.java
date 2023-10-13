@@ -9,11 +9,11 @@ import java.util.List;
 @Builder
 public class OrderInfoResponseDTO {
     private Long id;
-    private Double subTotal;
-    private Double shippingPrice;
-    private Double total;
+    private Long subTotal;
+    private Long shippingPrice;
+    private Long total;
     private String discount;
-    private Double grandTotal;
+    private Long grandTotal;
     private String firstname;
     private String lastname;
     private String mobile;

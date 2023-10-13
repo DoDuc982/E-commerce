@@ -20,10 +20,10 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Double price;
+    private Long price;
     private String imageUrl;
     private Integer quantity;
-    private Double totalPrice;
+    private Long totalPrice;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp

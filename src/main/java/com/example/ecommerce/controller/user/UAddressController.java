@@ -2,7 +2,7 @@ package com.example.ecommerce.controller.user;
 
 import com.example.ecommerce.DTO.request.AddressRequestDTO;
 import com.example.ecommerce.DTO.response.AddressResponseDTO;
-import com.example.ecommerce.security.JwtGenerator;
+import com.example.ecommerce.config.JwtGenerator;
 import com.example.ecommerce.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

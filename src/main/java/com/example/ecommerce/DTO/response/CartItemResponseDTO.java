@@ -12,6 +12,6 @@ public class CartItemResponseDTO {
     private String username;
     private String productName;
     private String productUrl;
-    private Double productPrice;
+    private Long productPrice;
     private Integer quantity;
 }

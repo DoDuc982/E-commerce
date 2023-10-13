@@ -23,16 +23,16 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double subTotal = (double) 0;
-    private Double shippingPrice = (double) 0;
-    private Double total = (double) 0;
+    private Long subTotal = (long) 0;
+    private Long shippingPrice = (long) 0;
+    private Long total = (long) 0;
     private String discount;
-    private Double grandTotal = (double) 0;
+    private Long grandTotal = (long) 0;
 
-    @NotEmpty(message = "Image url of product is required")
+    @NotEmpty(message = "Firstname is required")
     private String firstname;
 
-    @NotEmpty(message = "Image url of product is required")
+    @NotEmpty(message = "Lastname is required")
     private String lastname;
 
     @NotEmpty(message = "Phone number is required")

@@ -1,7 +1,7 @@
 package com.example.ecommerce.controller.user;
 
 import com.example.ecommerce.DTO.response.CartItemResponseDTO;
-import com.example.ecommerce.security.JwtGenerator;
+import com.example.ecommerce.config.JwtGenerator;
 import com.example.ecommerce.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -24,7 +24,7 @@ public class User {
     private String name;
 
     @NotEmpty(message = "Username is required")
-    @Size(min = 6, max = 40, message = "Username is too long or too short")
+    @Size(min = 4, max = 40, message = "Username is too long or too short")
     private String username;
 
     @NotEmpty(message = "Email is required")

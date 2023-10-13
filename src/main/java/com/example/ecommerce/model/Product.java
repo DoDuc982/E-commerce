@@ -28,9 +28,9 @@ public class Product {
 
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be greater than or equal to 0")
-    private Double price;
+    private Long price;
 
-    private Double discountPrice;
+    private Long discountPrice;
 
     @NotEmpty(message = "Image url of product is required")
     private String imageUrl;

@@ -65,12 +65,13 @@ public class OrderInfoService {
         order.setMobile(orderInfoRequestDTO.getMobile());
         order.setEmail(orderInfoRequestDTO.getEmail());
         order.setAddress(orderInfoRequestDTO.getAddress());
+        order.setDistrict(orderInfoRequestDTO.getDistrict());
         order.setCity(orderInfoRequestDTO.getCity());
         order.setProvince(orderInfoRequestDTO.getProvince());
         order.setContent(orderInfoRequestDTO.getContent());
         order.setUser(userRepository.findById(userId).orElse(null));
         orderInfoRepository.save(order);
-        double sum = 0;
+        long sum = 0;
         for (CartItem cartItem : cartItemRepository.findAllCartItemByUserId(userId)) {
             sum += cartItem.getQuantity() * cartItem.getProduct().getPrice();
             cartItem.getProduct().setSoldQuantity(cartItem.getQuantity() + cartItem.getProduct().getSoldQuantity());

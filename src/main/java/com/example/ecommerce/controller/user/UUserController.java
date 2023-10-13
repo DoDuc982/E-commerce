@@ -1,9 +1,8 @@
 package com.example.ecommerce.controller.user;
 
 import com.example.ecommerce.DTO.request.UserRequestDTO;
-import com.example.ecommerce.DTO.response.CartItemResponseDTO;
 import com.example.ecommerce.DTO.response.UserResponseDTO;
-import com.example.ecommerce.security.JwtGenerator;
+import com.example.ecommerce.config.JwtGenerator;
 import com.example.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("user/api/user_info")
